@@ -67,28 +67,108 @@ Provide a link to the source so we can see the original work and any modificatio
 1. You are now setup and ready to start coding. 
 
 
-# Your Notes
-*TODO: Add your documentation here* 
+# Jean Ventura's Notes
+
+## Instructions to run the project as a developer
+
+- Assuming previous Setup Instructions were done
+
+- From repository root, go to project root
+
+        $ cd listings
+
+- Run migrations
+
+        $ python manage.py migrate
+
+- Load data
+
+        $ python manage.py import_house_data ../sample-data/data.csv
+
+- Run tests
+
+        $ python manage.py test
+
+- Start server
+
+        $ python manage.py runserver
+
+- Go to endpoint
+
+    http://localhost:8000/api/houses/
 
 ## Time Spent
-*Give us a rough estimate of the time you spent working on this. If you spent time learning in order to do this project please feel free to let us know that too.*
-*This makes sure that we are evaluating your work fairly and in context. It also gives us the opportunity to learn and adjust our process if needed.*
+
+| Task | Time (hours)  |
+|---|---|
+| Designing/Coding  | 2.0  |
+| Documenting  | 0.5  |
+| Total  | 2.5  |
 
 ## Assumptions
-*Did you find yourself needing to make assumptions to finish this?*
-*If so, what were they and how did they impact your design/code?*
 
+1. No authentication/authorization required
+2. No automatic data schema or cleanup
+3. No additional functionality outside of reading the data
+4. Not expecting huge amounts of requests (since it not production ready)
+
+Since there was no direct mention of any of the above in the instructions, the expectations given the time constraint and the inability to wait until the next day to send out an email asking for clarification, I decided to assume the above was not needed.
+
+Under different circumstance I would ask for clarification of everything mentioned here in my notes.
 
 ## Next Steps
-*Provide us with some notes about what you would do next if you had more time.* 
-*Are there additional features that you would want to add? Specific improvements to your code you would make?*
+
+1. Schema/data cleanup
+2. Add authorization/authentication (if required)
+3. Better logging/auditing
+4. Filtering
+5. Caching
+6. More tests
+
+The current model definition is very generic and there's a lot that can be done to improve it, from naming conventions to data definitions. To comply with time requirements, couldn't dedicate as much time as I wanted to the initial data load.
+
 ### Features
+
+1. Endpoint that provides data on houses: `/api/houses/`
+2. Ability to paginate the endpoint using query parameters: `limit=50&offset=50`
+3. Ability to migrate data from a CSV (backend only)
 
 ### Testing
 
+Only added basic tests for the small amount of coding I had to do, since for such a simple requirement the Django REST Framework library provides almost all the functionality required.
+
+More tests will be needed in order to add functionality (testing permissions, serialization, etc.).
+
 ### Anything else needed to make this production ready?
 
+Application should be optimized for a continuous integration pipeline (automatic style checks and tests, dockerization).
+
+Proper application and web servers should be used (uwsgi/NGINX).
+
+Improve auditability (better logs).
 
 ## How to Use
-*Provide any end user documentation you think is necessary and useful here*
 
+On a browser:
+
+- To view the first page using the API Browser:
+    
+    http://localhost:9000/api/houses/?format=json
+
+- To view the first page in raw JSON format:
+
+    http://localhost:9000/api/houses/?format=json
+
+- To go to page 3 (amount of records per page is 50 by default):
+
+    http://localhost:9000/api/houses/?offset=100
+
+- To view 100 records per page (amount of records per page is 50 by default):
+
+    http://localhost:9000/api/houses/?limit=100
+
+- To go to page 3 when records per page is 100:
+
+    http://localhost:9000/api/houses/?limit=100&offset=200
+    
+- Total records, next page and previous pages are available as keys.
