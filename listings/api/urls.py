@@ -3,8 +3,9 @@ from rest_framework.routers import SimpleRouter
 
 from . import views
 
-# TODO: Create your routers and urls here
 router = SimpleRouter()
+
+router.register(r'houses', views.HouseViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
