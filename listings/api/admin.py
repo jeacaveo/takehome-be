@@ -1,3 +1,9 @@
 from django.contrib import admin
+from api.models import House
 
-# TODO: Register your models here.
+
+class HouseAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(House, HouseAdmin)
