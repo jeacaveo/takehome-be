@@ -1,4 +1,7 @@
 from django.test import TestCase
+from django.urls import reverse
+
+from rest_framework.test import APITestCase
 
 from api.models import House
 
@@ -33,3 +36,51 @@ class HouseTestCase(TestCase):
 
         # Then
         self.assertEqual(result, expected_result)
+
+
+class HouseViewSetTestCase(APITestCase):
+    """ Tests for House view. """
+
+    def test_get(self):
+        """ Test GET method is available. """
+        # Given
+        url = reverse("house-list")
+
+        # When
+        response = self.client.get(url)
+
+        # Then
+        self.assertEqual(response.status_code, 200)
+
+    def test_post(self):
+        """ Test POST method is not available. """
+        # Given
+        url = reverse("house-list")
+
+        # When
+        response = self.client.post(url)
+
+        # Then
+        self.assertEqual(response.status_code, 403)
+
+    def test_put(self):
+        """ Test PUT method is not available. """
+        # Given
+        url = reverse("house-list")
+
+        # When
+        response = self.client.put(url)
+
+        # Then
+        self.assertEqual(response.status_code, 403)
+
+    def test_delete(self):
+        """ Test PUT method is not available. """
+        # Given
+        url = reverse("house-list")
+
+        # When
+        response = self.client.delete(url)
+
+        # Then
+        self.assertEqual(response.status_code, 403)
